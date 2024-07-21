@@ -1,0 +1,95 @@
+"Ticket to ride" web application
+
+
+Main objects:
+Segment - part of a route.
+Route - set of segments (1+), representing a route between two towns.
+Ticket - a permission for a Traveller to travel via a certain route. Has a price.
+Traveller - a person who takes a ticket from town A to town B.
+
+The price of the travel through 1 segment is 5 GBP.
+The price of the travel through 2 segments is 7 GBP.
+The price of the travel through 3 segments is 10 GBP.
+
+
+Functionality:
+1. Calculate the price of a most optimal travel between two towns in GBP.
+2. Save the ticket to a storage if a traveller has enough money.
+3. Find the bought ticket by id
+
+
+Stack:
+Java 21, Spring Boot, Spring Data, Spring Security, JUnit 5, Mockito, PostgreSQL, Maven/Gradle
+
+SQL schemas defined in schema.sql
+
+
+API:
+
+Register a new user
+POST - /api/users/register
+Example body
+{
+    "username" : "user",
+    "password" : "1"
+}
+Example response
+{
+    "userId": 1,
+    "username": "user",
+    "password": "$2a$10$.qKzmbEfY2FCnKjm.UlNWeTCGuuXSsqznx0Hol/UJL5QVJ4UXoUTK"
+}
+
+Finds an available ticket from the defined departure and arrival towns
+GET - /api/tickets/ticket
+Example body
+{
+    "departure" : "London",
+    "arrival" : "Bristol"
+}
+Example response
+{
+    "segments": 7,
+    "price": 25,
+    "currency": "GBP"
+}
+
+Buys the ticket. The body for the ticket should correspond to the available ticker and user must be registered and signed
+POST - /api/tickets
+Basic auth example
+Username: user
+Password: 1
+
+Example body
+{
+    "departure" : "London",
+    "arrival" : "Bristol",
+    "segments" : 7,
+    "price" : 25,
+    "currency" : "GBP",
+    "traveller" : "Bob Smith",
+    "travellerAmount" : 30
+}
+Example response
+{
+    "result":"success",
+    "change":5,
+    "currency":"GBP"
+}
+
+Finds tickets bought by a traveller
+GET - /api/tickets
+Example body {
+    "travellerName" : "Adam Smith"
+}
+Example response {
+    "ticketId" : 1,
+    "departure" : "London",
+    "arrival" : "Bristol",
+    "segments" : 7,
+    "price" : 25,
+    "currency" : "GBP",
+    "traveller" : "Adam Smith",
+    "travellerAmount" : 30
+}
+
