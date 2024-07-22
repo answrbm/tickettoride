@@ -15,7 +15,8 @@ The price of the travel through 3 segments is 10 GBP.
 Functionality:
 1. Calculate the price of a most optimal travel between two towns in GBP.
 2. Save the ticket to a storage if a traveller has enough money.
-3. Find the bought ticket by id
+3. Find the bought ticket by traveller name
+4. Register a new user
 
 
 Stack:
